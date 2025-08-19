@@ -1,20 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Text, Button } from 'react-native';
+import CarroView from './view/CarroView';
+import { ThemeProvider, useThemeApp } from './theme/ThemeContext';
 
-export default function App() {
+const MainApp = () => {
+
+  const { toggleTema, styles, tema } = useThemeApp();
+
   return (
+
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <Button title={tema === "light" ? "Tema Claro" : "Tema Escuro"} onPress={toggleTema} />
+      </View>
+
       <StatusBar style="auto" />
+      <CarroView />
+
     </View>
+
   );
+
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+
+  return (
+
+    <ThemeProvider>
+      <MainApp />
+    </ThemeProvider>
+
+  );
+
+}
