@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Carro } from '../model/carro';
+import { Carro } from '../model/carroSchema';
 
 const FIREBASE_DB_URL = 'https://projeto-concessionaria-default-rtdb.firebaseio.com';
 

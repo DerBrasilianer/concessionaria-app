@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Carro } from '../model/carro';
+import { Carro } from '../model/carroSchema';
 import { salvarCarro } from '../service/carroService';
 
 const useCarroControl = () => {
@@ -16,21 +16,6 @@ const useCarroControl = () => {
     const [camposInvalidos, setCamposInvalidos] = useState<{ [K in keyof Carro]?: boolean }>({});
 
     const salvar = () => {
-        const novosInvalidos: { [K in keyof Carro]?: boolean } = {};
-
-        if (!carro.id) novosInvalidos.id = true;
-        if (!carro.ano) novosInvalidos.ano = true;
-        if (carro.placa.trim() === "") novosInvalidos.placa = true;
-        if (carro.modelo.trim() === "") novosInvalidos.modelo = true;
-
-        setCamposInvalidos(novosInvalidos);
-
-        if (Object.keys(novosInvalidos).length > 0) {
-            setMensagem("Preencha todos os campos antes de salvar.");
-            setTipoMensagem("erro");
-            return;
-        }
-
         setLoading(true);
         salvarCarro(carro)
             .then(() => {
@@ -39,7 +24,7 @@ const useCarroControl = () => {
                 setCamposInvalidos({});
             })
             .catch((erro: any) => {
-                setMensagem("Erro ao gravar o carro: " + erro);
+                setMensagem("Erro ao gravar o carro: " + erro.message);
                 setTipoMensagem("erro");
             })
             .finally(() => {
